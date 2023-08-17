@@ -384,19 +384,29 @@ public class BankingApplication{
                                         break; 
                                     } 
 
-                                    if(bankAccount[i][0].equals(accountTo)){
-                                        index = i;
-                                        exist = true;
-                                        System.out.println("founfbbbb");
-                                        accountToBalance = Double.valueOf(bankAccount[i][2]);
+                                    for(int j=0;j<bankAccount.length;j++){
+                                        if(bankAccount[j][0].equals(accountTo)){
+                                            index = j;
+                                            exist = true;
+                                            System.out.println("founfbbbb");
+                                            accountToBalance = Float.valueOf(bankAccount[j][2]);
+                                        }
                                     }
 
-                                    System.out.println("Transfer Amount :");
+                                    System.out.printf("From Balance is : Rs%.2f\n",accountFromBalance);
+                                    System.out.printf("To Balance is : Rs%.2f\n",accountToBalance);
+
+                                    System.out.print("Transfer Amount :");
                                     transferAmount=scanner.nextDouble();
                                     scanner.nextLine();
 
-                                    System.out.printf("Current Balance is : Rs%.2f\n",accountFromBalance);
-                                    System.out.printf("Current Balance is : Rs%.2f\n",accountToBalance);
+                                    if(transferAmount>100){
+                                        
+                                    }
+
+
+
+                                    
 
 
                                 
