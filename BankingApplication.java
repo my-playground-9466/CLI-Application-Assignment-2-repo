@@ -66,7 +66,7 @@ public class BankingApplication{
 
                     System.out.printf("Account ID: %s \n", (accountNumber));
 
-                    do{
+                do{
                         valid = true;
                         System.out.println("\tEnter Account Holder's name :");
                         name = scanner.nextLine().strip();
@@ -77,18 +77,18 @@ public class BankingApplication{
                             valid = false;
                             continue;
                         }
-                            for (int i = 0; i < name.length(); i++) {
-                                if (!(Character.isLetter(name.charAt(i)) || Character.isSpaceChar(name.charAt(i))) ) {
+                        for (int i = 0; i < name.length(); i++) {
+                            if (!(Character.isLetter(name.charAt(i)) || Character.isSpaceChar(name.charAt(i))) ) {
                                     System.out.printf("%sInvalid Name%s\n", COLOR_RED_BOLD, RESET);
                                     valid = false;
                                     break;
-                                }
-                            }   
+                            }
+                        }   
 
 
-                    }while(!valid);
+                }while(!valid);
 
-                    do{
+                do{
                         valid = true;
                         System.out.print("Enter the initial diposit amount (Rs.) :");
                         diposit = scanner.nextDouble();
@@ -101,7 +101,7 @@ public class BankingApplication{
                         }
                         
 
-                    }while(!valid);
+                }while(!valid);
                     
 
                     String[][] newBankAccount= new String[bankAccount.length+1][3];
@@ -133,7 +133,7 @@ public class BankingApplication{
                     int index = 0;
                     
                     
-                    do{
+                do{
                         valid = true;
                         System.out.print("\tEnter Account Number :");
                         accountNumber = scanner.nextLine().toUpperCase().strip();
@@ -165,74 +165,65 @@ public class BankingApplication{
                             // }
                         }
 
-                            boolean exist = false;
-                            double currentBalance = 0;
-                            for(int i=0;i<bankAccount.length;i++){
+                        boolean exist = false;
+                        double currentBalance = 0;
+                        for(int i=0;i<bankAccount.length;i++){
                             
-                                if(bankAccount[i][0].equals(accountNumber)){
-                                    index = i;
-                                    exist = true;
-                                    System.out.println("founf");
+                            if(bankAccount[i][0].equals(accountNumber)){
+                                index = i;
+                                exist = true;
+                                System.out.println("founf");
+                                System.out.println("Account Holder Name :"+bankAccount[i][1]);
+                                System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
 
-                                    System.out.println("Account Holder Name :"+bankAccount[i][1]);
-                                    System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
+                    Deposit:
+                    do{
+                                valid=true;
+                                System.out.println("Deposit Amount : Rs. ");
+                                double amount = scanner.nextDouble();
+                                scanner.nextLine();
 
-                            Deposit:
-                            do{
-                                    valid=true;
-                                    System.out.println("Deposit Amount : Rs. ");
-                                    double amount = scanner.nextDouble();
-                                    scanner.nextLine();
+                                if(amount<500){
+                                    System.out.println("Insufficient Amount. Minimum amount is Rs.500. Do you want to try again (y/n)");
+                                    if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue Deposit;
+                                    valid=false;
+                                    screen = DASHBOARD;
+                                    break; 
+                                }else{
+                                    for(int j=0;j<bankAccount.length;j++){
+                                        if(bankAccount[i]==bankAccount[j]){
 
-                                    
-
-                                    if(amount<500){
-                                        System.out.println("Insufficient Amount. Minimum amount is Rs.500. Do you want to try again (y/n)");
-                                        if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue Deposit;
-                                        valid=false;
-                                        screen = DASHBOARD;
-                                        break; 
-                                    
-
-                                    }else{
-                                        for(int j=0;j<bankAccount.length;j++){
-                                            if(bankAccount[i]==bankAccount[j]){
-
-                                                currentBalance = Double.valueOf(bankAccount[j][2])+ amount;
-                                                bankAccount[i][2] = currentBalance +"";
-
-                                            }
+                                            currentBalance = Double.valueOf(bankAccount[j][2])+ amount;
+                                             bankAccount[i][2] = currentBalance +"";
 
                                         }
+
                                     }
-                                         System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
-                                         System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);   
-                                        if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
-                                        screen = DASHBOARD;
-                                        break;  
+                                 }
+                                System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
+                                System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);   
+                                if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                screen = DASHBOARD;
+                                break;  
                                     
 
-                            }while(!valid);
-                                
-                                }
-                                
-                                        if(!exist){
-                                            valid = false;
-                                            System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);
-                                                if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
-                                                screen = DASHBOARD;
-                                                break; 
-                                        }                   
-                                }
-
                     }while(!valid);
+                                
+                                } if(!exist){
+                                    valid = false;
+                                    System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);
+                                    if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                    screen = DASHBOARD;
+                                    break; 
+                                }                   
+                        }
+
+                }while(!valid);
 
 
 
                     case WITHDRAW_MONEY:
-                    
                         index = 0;
-                    
                     
                     do{
                         valid = true;
@@ -266,67 +257,154 @@ public class BankingApplication{
                             // }
                         }
 
-                            boolean exist = false;
-                            double currentBalance = 0;
-                            for(int i=0;i<bankAccount.length;i++){
+                        boolean exist = false;
+                        double currentBalance = 0;
+                        for(int i=0;i<bankAccount.length;i++){
                             
-                                if(bankAccount[i][0].equals(accountNumber)){
-                                    index = i;
-                                    exist = true;
-                                    System.out.println("founf");
+                            if(bankAccount[i][0].equals(accountNumber)){
+                                index = i;
+                                exist = true;
+                                System.out.println("founf");
 
-                                    System.out.println("Account Holder Name :"+bankAccount[i][1]);
-                                    System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
+                                System.out.println("Account Holder Name :"+bankAccount[i][1]);
+                                System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
 
-                            Withdraw:
-                            do{
-                                    valid=true;
-                                    System.out.println("Withdrawal Amount : Rs. ");
-                                    double withdrawAmount = scanner.nextDouble();
-                                    scanner.nextLine();
+                        Withdraw:
+                        do{
+                                valid=true;
+                                System.out.println("Withdrawal Amount : Rs. ");
+                                double withdrawAmount = scanner.nextDouble();
+                                scanner.nextLine();
 
                                     
 
-                                    if(withdrawAmount<100){
-                                        System.out.println("Insufficient Amount. Minimum amount is Rs.100. Do you want to try again (y/n)");
-                                        if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue Withdraw;
-                                        valid=false;
-                                        screen = DASHBOARD;
-                                        break; 
+                                if(withdrawAmount<100){
+                                    System.out.println("Insufficient Amount. Minimum amount is Rs.100. Do you want to try again (y/n)");
+                                    if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue Withdraw;
+                                    valid=false;
+                                    screen = DASHBOARD;
+                                    break; 
                                     
 
-                                    }else{
-                                        for(int j=0;j<bankAccount.length;j++){
-                                            if(bankAccount[i]==bankAccount[j]){
+                                }else{
+                                    for(int j=0;j<bankAccount.length;j++){
+                                        if(bankAccount[i]==bankAccount[j]){
 
-                                                if(withdrawAmount < Double.valueOf(bankAccount[i][2]))
+                                            if(withdrawAmount < Double.valueOf(bankAccount[i][2]))
 
                                                 currentBalance = Double.valueOf(bankAccount[j][2])-withdrawAmount;
                                                 bankAccount[i][2] = currentBalance +"";
 
                                             }
 
-                                        }
                                     }
-                                         System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
-                                         System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);   
-                                        if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
-                                        screen = DASHBOARD;
-                                        break;  
+                                }
+                                System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
+                                System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);   
+                                if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                screen = DASHBOARD;
+                                break;  
                                     
 
-                            }while(!valid);
+                        }while(!valid);
                                 
-                                }
+                                }if(!exist){
+                                    valid = false;
+                                    System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);
+                                    if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                    screen = DASHBOARD;
+                                    break; 
+                                }                   
+                            }
+
+                    }while(!valid);
+
+
+                    case TRANSFER_MONEY:
+
+                        String accountFrom;
+                        String accountTo;
+                        double transferAmount;
+                        double accountToBalance = 0;
+                        double accountFromBalance = 0;
+
+
+                    do{
+                            valid = true;
+                            System.out.print("Enter from account number :");
+                            accountFrom = scanner.nextLine().toUpperCase().strip();
+
+                            
+                            if(accountFrom.isBlank()){
+                                valid = false; 
+                                System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);
+                                if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                screen = DASHBOARD;
+                                break;
                                 
-                                        if(!exist){
-                                            valid = false;
-                                            System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);
-                                                if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
-                                                screen = DASHBOARD;
-                                                break; 
-                                        }                   
+
+                            }else if(!(accountFrom.startsWith("SDB-") || accountFrom.length()!=9)){
+                                valid = false;
+                                System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);   
+                                if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                screen = DASHBOARD;
+                                break; 
+                            } 
+
+                            boolean exist = false;
+                            double currentBalance = 0;
+                            for(int i=0;i<bankAccount.length;i++){
+                            
+                                if(bankAccount[i][0].equals(accountFrom)){
+                                    index = i;
+                                    exist = true;
+                                    System.out.println("founf");
+                                    accountFromBalance = Float.valueOf(bankAccount[i][2]);
+
+                                    // System.out.println("Account Holder Name :"+bankAccount[i][1]);
+                                    // System.out.printf("Current Balance is : Rs%.2f\n",Float.valueOf(bankAccount[i][2]));
                                 }
+                                    System.out.print("Enter to account number :");
+                                    accountTo = scanner.nextLine().toUpperCase().strip();
+                                
+                            
+                                    if(accountTo.isBlank()){
+                                    valid = false; 
+                                    System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);
+                                    if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                    screen = DASHBOARD;
+                                    break;
+                                
+
+                                    }else if(!(accountTo.startsWith("SDB-") || accountTo.length()!=9)){
+                                        valid = false;
+                                        System.out.printf("\t%sDo you want to try again ? (Y/N)%s\n", COLOR_RED_BOLD, RESET);   
+                                        if (scanner.nextLine().strip().toUpperCase().equals("Y")) continue;
+                                        screen = DASHBOARD;
+                                        break; 
+                                    } 
+
+                                    if(bankAccount[i][0].equals(accountTo)){
+                                        index = i;
+                                        exist = true;
+                                        System.out.println("founfbbbb");
+                                        accountToBalance = Double.valueOf(bankAccount[i][2]);
+                                    }
+
+                                    System.out.println("Transfer Amount :");
+                                    transferAmount=scanner.nextDouble();
+                                    scanner.nextLine();
+
+                                    System.out.printf("Current Balance is : Rs%.2f\n",accountFromBalance);
+                                    System.out.printf("Current Balance is : Rs%.2f\n",accountToBalance);
+
+
+                                
+
+                            }
+
+
+                            
 
                     }while(!valid);
 
